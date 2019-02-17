@@ -1,14 +1,20 @@
 import React from 'react';
 import { Platform, StatusBar, StyleSheet, View } from 'react-native';
-import { AppLoading, Asset, Font, Icon, Constants, Audio, Permissions } from 'expo';
+import {
+  AppLoading,
+  Asset,
+  Font,
+  Icon,
+  Constants,
+  Audio,
+  Permissions,
+} from 'expo';
 import AppNavigator from './navigation/AppNavigator';
 
 export default class App extends React.Component {
   state = {
     isLoadingComplete: false,
   };
-
-
 
   async componentDidMount() {
     await Permissions.askAsync(Permissions.AUDIO_RECORDING);
@@ -18,7 +24,9 @@ export default class App extends React.Component {
       playsInSilentModeIOS: true,
       shouldDuckAndroid: true,
       interruptionModeAndroid: Audio.INTERRUPTION_MODE_ANDROID_DO_NOT_MIX,
+      playThroughEarpieceAndroid: true,
     });
+
     // has a bug, needs work
     const recording = new Audio.Recording();
     try {
@@ -28,6 +36,7 @@ export default class App extends React.Component {
       alert(error);
     }
   
+
   }
 
   render() {
