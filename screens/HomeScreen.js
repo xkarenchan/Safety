@@ -1,3 +1,4 @@
+import { Audio, Permissions } from 'expo';
 import React from 'react';
 import {
   Image,
@@ -8,9 +9,6 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { WebBrowser } from 'expo';
-import { Audio, Permissions } from 'expo';
-import { App } from '../App.js';
 
 import { MonoText } from '../components/StyledText';
 
@@ -22,6 +20,7 @@ async function uploadAudioAsync(uri) {
   let fileType = uriParts[uriParts.length - 1];
 
   let formData = new FormData();
+
   formData.append('file', {
     uri,
     name: `recording.${fileType}`,
