@@ -27,54 +27,7 @@ export default class App extends React.Component {
     } catch (error) {
       alert(error);
     }
-    
-    setTimeout(async () => {
-      await recording.stopAndUnloadAsync();
-      console.log(recording.getURI());
-    
-      // await convertSpeechToText(recording);
-      // https://cloud.ibm.com/apidocs/speech-to-text
-      const secretApiKey = 'kadshflkdsjkhkj5hkj45kjh34kj5h4jkl5';
-      const watsonUrl = `https://apikey:${secretApiKey}@stream.watsonplatform.net/speech-to-text/api/v1/recognize`;
-    
-      // https://cloud.ibm.com/docs/services/speech-to-text/http.html#HTTP-multi
-      let formData = new FormData();
-      formData.append('metadata', {
-        value: JSON.stringify({
-          part_content_type: 'audio/mp3',
-        }),
-          name: `metadata.json`,
-          type: `application/json`,
-      });
-      
-      formData.append('upload', {
-        uri: recording.getURI(),
-        name: `audio.mp3`,
-        type: `audio/mp3`,
-      });
-      
-      let options = {
-        method: 'POST',
-        body: formData,
-        headers: {
-        Accept: 'application/json',
-        'Content-Type': 'multipart/form-data',
-        },
-      };
-      
-      try {
-        let response = await fetch(watsonUrl, options);
-        if (response.ok) { // is the HTTP response code 2xx
-          let responseBody = await response.text();
-          console.log(responseBody);
-        } else {
-        // 404 4xx 5xx
-          console.log('server error');
-        }
-      } catch (error) {
-        console.error(error);
-      }
-    }, 500);
+  
   }
 
   render() {
