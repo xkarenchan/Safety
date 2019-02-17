@@ -13,32 +13,46 @@ import {
 import { MonoText } from '../components/StyledText';
 
 async function uploadAudioAsync(uri) {
-  const secretApiKey = 'H1MlrkJqLrhplKhmhRS3P1aQQ7F6qSjdaSdRFNbw6EG5';
-  const apiUrl = `https://apikey:${secretApiKey}@stream.watsonplatform.net/speech-to-text/api/v1/recognize`;
-  console.log('Uploading ' + uri);
-  let uriParts = uri.split('.');
-  let fileType = uriParts[uriParts.length - 1];
+  const url = 'localhost:3000';
+  // const apiUrl = `https://apikey:${secretApiKey}@stream.watsonplatform.net/speech-to-text/api/v1/recognize`;
+  // console.log('Uploading ' + uri);
+  // let uriParts = uri.split('.');
+  // let fileType = uriParts[uriParts.length - 1];
 
-  let formData = new FormData();
+  // let formData = new FormData();
 
-  formData.append('file', {
-    uri,
-    name: `recording.${fileType}`,
-    type: `audio/x-${fileType}`,
-  });
-
-  let options = {
-    method: 'POST',
-    body: formData,
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'multipart/form-data',
-    },
-  };
+  // formData.append('file', {
+  //   uri,
+  //   name: `recording.${fileType}`,
+  //   type: `audio/x-${fileType}`,
+  // });
+  // //where do you pass in query parameters?
+  // let options = {
+  //   method: 'POST',
+  //   body: formData,
+  //   headers: {
+  //     Accept: 'application/json',
+  //     'Content-Type': 'multipart/form-data'
+  //   },
+  // };
 
   console.log('POSTing ' + uri + ' to ' + apiUrl);
-  return fetch(apiUrl, options);
-}
+  let url = await this.recording.getURL();
+
+  return fetch(url, {
+  method: 'POST',
+  headers: {
+    Accept: 'application/json',
+    'Content-Type': 'multipart/form-data',
+  },
+  body: JSON.stringify({
+    name: 'recording.${fileType}',
+    type: 'audio/x-${fileType}',
+  }),
+});
+  //backup plan: try to execute curl directly from js
+
+} 
 
 export default class HomeScreen extends React.Component {
   recording = null;
